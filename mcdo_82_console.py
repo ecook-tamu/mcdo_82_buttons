@@ -23,31 +23,6 @@ GPIO.setup(PIN_lower_drop,  GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
 ########################################################################
 #
-# http commands
-#
-########################################################################
-
-# DOME SLIT:
-# dome_close_relay_command_down  = http://192.168.20.93/stateFull.xml?relay1State=2  # close dome button is pressed
-# dome_close_relay_command_up    = http://192.168.20.93/stateFull.xml?relay1State=0  # close dome button is released
-# dome_open_relay_command_down   = http://192.168.20.93/stateFull.xml?relay2State=2  # open dome button  is pressed
-# dome_open_relay_command_up     = http://192.168.20.93/stateFull.xml?relay2State=0  # open dome button  is released
-
-# UPPER CURTAIN:
-# uc_close_relay_command_down    = http://192.168.20.92/stateFull.xml?relay3State=2  # drop upper curtain button  is pressed
-# uc_close_relay_command_up      = http://192.168.20.92/stateFull.xml?relay3State=0  # drop upper curtain button  is released
-# uc_open_relay_command_down     = http://192.168.20.92/stateFull.xml?relay4State=2  # raise upper curtain button is pressed
-# uc_open_relay_command_up       = http://192.168.20.92/stateFull.xml?relay4State=0  # raise upper curtain button is released
-
-# LOWER CURTAIN:
-# lc_close_relay_command_down    = http://192.168.20.92/stateFull.xml?relay2State=2  # drop lower curtain button  is pressed
-# lc_close_relay_command_up      = http://192.168.20.92/stateFull.xml?relay2State=0  # drop lower curtain button  is released
-# lc_open_relay_command_down     = http://192.168.20.92/stateFull.xml?relay1State=2  # raise lower curtain button is pressed
-# lc_open_relay_command_up       = http://192.168.20.92/stateFull.xml?relay1State=0  # raise lower curtain button is released
-
-
-########################################################################
-#
 # for testing, the commands are just strings that print to the console
 #
 ########################################################################
