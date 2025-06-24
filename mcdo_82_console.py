@@ -152,6 +152,8 @@ class PiButtons:
                 time.sleep(0.5)
                 
             else:
+                # The previous state of the button, the current state of the button, the pressed command, and the released command
+                # are sent to the send_cmd function, which compares the states and sends the commands
                 self.prev_button_dome_close  = self.send_cmd(self.prev_button_dome_close,  self.button_dome_close,  dome_close_relay_command_down, dome_close_relay_command_up)
                 self.prev_button_dome_open   = self.send_cmd(self.prev_button_dome_open,   self.button_dome_open,   dome_open_relay_command_down,  dome_open_relay_command_up)
                 self.prev_button_upper_drop  = self.send_cmd(self.prev_button_upper_drop,  self.button_upper_drop,  uc_close_relay_command_down,   uc_close_relay_command_up)
