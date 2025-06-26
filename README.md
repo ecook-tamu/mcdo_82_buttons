@@ -11,3 +11,5 @@ A Raspberry Pi is connected to the six buttons:
 * Pin 22 : Lower curtain raise
 
 Every 0.5s, the Pi reads the buttons, checks for conflicts or direction reversals, then sends the URL commands to the web relay that controls the dome slit and curtains. It stores the state of the button to be compared to for the next 0.5s check.
+
+![pi_GPIO](pi_GPIO.png)
