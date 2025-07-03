@@ -2,13 +2,11 @@ The purpose of this project is to restore the functionality of six buttons on th
 https://instrumentation.tamu.edu/mcdo-82-console/
 
 # Program Description
-Every 0.5s, the Pi reads the buttons, checks for conflicts or direction reversals, then sends the URL commands to the web relay that controls the dome slit and curtains. It stores the state of the button to be compared to for the next 0.5s check.
+Every 0.5s, the Pi reads the buttons, checks for conflicts or direction reversals, then sends commands over the network to the web relay that controls the dome slit and curtains.
 
-First, each of the pins are assigned according to the GPIO labels on the Raspberry Pi. Each pin is also set to "pull down" to make them  default to LOW (False).
+First, each of the pins are assigned according to the GPIO labels on the Raspberry Pi. Each pin is also set to "pull down" to make them default to LOW (False).
 
-Next, all the http commands are assigned. These are the commands that are sent to the web relay controller, which in turns opens and closes the relays that control the dome slit and curtains.
-
-(For testing, the http commands are replaced with normal print statements.)
+Next, all the http commands are assigned. These are the commands that are sent to the web relay controller, which in turns opens and closes the relays that control the dome slit and curtains. (For testing, the http commands are replaced with normal print statements.)
 
 The class "PiButtons" contains all the code for reading the GPIO inputs, deciding if the inputs are allowable, and sending the http commands.
 
