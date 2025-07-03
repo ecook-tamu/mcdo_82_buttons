@@ -13,6 +13,7 @@ import requests
 # the relays that control the dome slit and curtains.
 #
 # For testing, the http commands are replaced with normal print statements.
+# The http commands are in a separate document.
 #
 # The class "PiButtons" contains all the code for reading the GPIO inputs,
 # deciding if the inputs are allowable, and sending the http commands.
