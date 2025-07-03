@@ -24,6 +24,7 @@ GPIO.setup(PIN_lower_drop,  GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 ########################################################################
 #
 # for testing, the commands are just strings that print to the console
+# for the actual command addresses, refer to a separate google doc
 #
 ########################################################################
 
