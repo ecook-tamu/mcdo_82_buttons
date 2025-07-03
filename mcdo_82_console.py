@@ -2,16 +2,63 @@ import RPi.GPIO as GPIO
 import time
 import requests
 
-# Sets Raspberry Pi pins to count sequentially
-GPIO.setmode(GPIO.BOARD)
+########################################################################
+#
+# First, each of the pins are assigned according to the GPIO labels on
+# the Raspberry Pi. Each pin is also set to "pull down" to make them
+# default to LOW (False).
+#
+# Next, all the http commands are assigned. These are the commands that
+# are sent to the web relay controller, which in turns opens and closes
+# the relays that control the dome slit and curtains.
+#
+# For testing, the http commands are replaced with normal print statements.
+#
+# The class "PiButtons" contains all the code for reading the GPIO inputs,
+# deciding if the inputs are allowable, and sending the http commands.
+#
+#
+# The main while loop runs every 0.5s and does the following:
+# 1. Calls buttons_check_all() to check all the GPIO inputs and
+#    store the inputs as the current state of the buttons.
+# 2. Check if two disallowed buttons are being pressed at the same
+#    time (eg, both lowering and raising the upper curtain).
+#    Set curtain_flag if so.
+# 3. Check if a direction is being quickly reversed by comparing the
+#    current button input with the previous button input.
+#    Set direction_flag if so.
+# 4. If curtain_flag or direction_flag is true, do not send any commands.
+#    Additionally, store the inputs as "previous" inputs for the next round.
+# 5. If all checks are passed, send the commands using send_cmd()
+#    Additionally, store the inputs as "previous" inputs for the next round.
+#
+# 
+# send_cmd() takes the following information for a button:
+# 1. The previous state of the button
+# 2. The current state of the button
+# 3. The button's "relay down" command (for "button pressed")
+# 4. The button's "relay up" command (for "button released")
+# 
+# send_cmd() then sends one of two commands for each button:
+# 1. If the button is being pressed, send the "button is pressed" command
+# 2. If the button was previously being pressed, but now it is not,
+#    send the "button is released" command.
+#
+# send_cmd() returns the current state of the button to be stored
+# as the previous state of the button for the next round.
+#
+########################################################################
 
-# Assign pins on the Raspberry Pi
-PIN_dome_close  = 11
-PIN_dome_open   = 13
-PIN_upper_drop  = 15
-PIN_upper_raise = 16
-PIN_lower_drop  = 18
-PIN_lower_raise = 22
+# Sets Raspberry Pi pins to match the GPIO labels
+GPIO.setmode(GPIO.BCM)
+
+# Assign GPIO pins on the Raspberry Pi
+PIN_dome_close  = 13
+PIN_dome_open   = 27
+PIN_upper_drop  = 17
+PIN_upper_raise = 24
+PIN_lower_drop  = 22
+PIN_lower_raise = 20
 
 # Sets Raspberry Pi pins to default to a LO state
 GPIO.setup(PIN_dome_close,  GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
@@ -23,8 +70,32 @@ GPIO.setup(PIN_lower_drop,  GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
 ########################################################################
 #
+# http commands
+#
+########################################################################
+
+# DOME SLIT:
+dome_close_relay_command_down  = "http://192.168.20.93/stateFull.xml?relay1State=2"  # close dome button is pressed
+dome_close_relay_command_up    = "http://192.168.20.93/stateFull.xml?relay1State=0"  # close dome button is released
+dome_open_relay_command_down   = "http://192.168.20.93/stateFull.xml?relay2State=2"  # open dome button  is pressed
+dome_open_relay_command_up     = "http://192.168.20.93/stateFull.xml?relay2State=0"  # open dome button  is released
+
+# UPPER CURTAIN:
+uc_close_relay_command_down    = "http://192.168.20.92/stateFull.xml?relay3State=2"  # drop upper curtain button  is pressed
+uc_close_relay_command_up      = "http://192.168.20.92/stateFull.xml?relay3State=0"  # drop upper curtain button  is released
+uc_open_relay_command_down     = "http://192.168.20.92/stateFull.xml?relay4State=2"  # raise upper curtain button is pressed
+uc_open_relay_command_up       = "http://192.168.20.92/stateFull.xml?relay4State=0"  # raise upper curtain button is released
+
+# LOWER CURTAIN:
+lc_close_relay_command_down    = "http://192.168.20.92/stateFull.xml?relay2State=2"  # drop lower curtain button  is pressed
+lc_close_relay_command_up      = "http://192.168.20.92/stateFull.xml?relay2State=0"  # drop lower curtain button  is released
+lc_open_relay_command_down     = "http://192.168.20.92/stateFull.xml?relay1State=2"  # raise lower curtain button is pressed
+lc_open_relay_command_up       = "http://192.168.20.92/stateFull.xml?relay1State=0"  # raise lower curtain button is released
+
+
+########################################################################
+#
 # for testing, the commands are just strings that print to the console
-# for the actual command addresses, refer to a separate google doc
 #
 ########################################################################
 
