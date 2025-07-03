@@ -8,7 +8,7 @@ First, each of the pins are assigned according to the GPIO labels on the Raspber
 
 Next, all the http commands are assigned. These are the commands that are sent to the web relay controller, which in turns opens and closes the relays that control the dome slit and curtains. (For testing, the http commands are replaced with normal print statements.)
 
-Finally, all button states and previous button states are set to "False" to begin, and then the main while loop begins, looping every 0.5s.
+Finally, all button states and previous button states are defaulted to "False", and then the main while loop begins, looping every 0.5s.
 
 ## The main while loop
 Runs every 0.5s and does the following:
