@@ -1,5 +1,4 @@
 The purpose of this project is to restore the functionality of six buttons on the McDonald Observatory 82" Telescope Console that control the dome slit and curtains.
-https://instrumentation.tamu.edu/mcdo-82-console/
 
 # Program Description
 Every 0.5s, the Pi reads the buttons, checks for conflicts or direction reversals, then sends commands over the network to the web relay that controls the dome slit and curtains.
